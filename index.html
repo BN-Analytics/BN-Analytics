@@ -3,16 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+    <title>BN Analytics - Smarter Trading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #000428, #004e92);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFCC00;
+        }
+
+        .nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            color: #FF5733;
+        }
+
+        /* Background Animation with Words */
+        .bg-words {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-words span {
+            position: absolute;
+            font-size: 50px;
+            font-weight: bold;
+            opacity: 0;
+            color: rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            animation: fadeWords 12s infinite linear;
+        }
+
+        .bg-words span:nth-child(1) { animation-delay: 0s; }
+        .bg-words span:nth-child(2) { animation-delay: 2s; }
+        .bg-words span:nth-child(3) { animation-delay: 4s; }
+        .bg-words span:nth-child(4) { animation-delay: 6s; }
+        .bg-words span:nth-child(5) { animation-delay: 8s; }
+        .bg-words span:nth-child(6) { animation-delay: 10s; }
+
+        @keyframes fadeWords {
+            0% { opacity: 0; transform: scale(1); }
+            20% { opacity: 0.3; transform: scale(1.2); }
+            40% { opacity: 0.1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        /* Main Content */
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 120px;
+        }
+
+        .content {
+            max-width: 50%;
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 38px;
+            font-weight: 600;
+            color: #FFCC00;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 18px;
+            color: #DDDDDD;
+            margin-top: 10px;
+        }
+
+        .highlight {
+            font-size: 20px;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+
+        .join-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #FF5733;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(255, 87, 51, 0.8);
+            transition: 0.3s;
+        }
+
+        .join-btn:hover {
+            background-color: #E64A19;
+            box-shadow: 0px 0px 15px rgba(255, 87, 51, 1);
+        }
+
+        /* Login Form */
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            color: white;
+            width: 350px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .form-container h2 {
+            color: #FFCC00;
+            margin-bottom: 10px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-container input::placeholder {
+            color: #ddd;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #E64A19;
+        }
+
+        .form-container a {
+            display: block;
+            text-decoration: none;
+            color: #FFCC00;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Free Website</h1>
-    <button onclick="signIn()">Login with Google</button>
-    <button onclick="signOut()">Logout</button>
-    <p id="user-info"></p>
-    <script src="script.js"></script>
+
+    <!-- Background Word Animation -->
+    <div class="bg-words">
+        <span>Intraday</span>
+        <span>Momentum</span>
+        <span>Price Action</span>
+        <span>Trend Analysis</span>
+        <span>Scalping</span>
+        <span>Breakout</span>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">BN Analytics</div>
+        <div class="nav">
+            <a href="#">Knowledge</a>
+            <a href="#">Pricing</a>
+            <a href="#">T&C</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Refund Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content">
+            <h1>Make Better Trading Decisions</h1>
+            <p class="highlight">Empowering Intraday Traders with Data-Driven Insights.</p>
+            <p>BN Analytics helps you analyze market trends and trading signals in real time, ensuring smarter investment choices.</p>
+            <a href="#" class="join-btn">Join Now</a>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-container">
+            <h2>BN Analytics</h2>
+            <p>Sign In</p>
+            <form>
+                <input type="email" placeholder="Enter your email address" required>
+                <input type="password" placeholder="Enter your password" required>
+                <button type="submit">Sign In</button>
+            </form>
+            <a href="#">Create an account</a>
+            <a href="#">Forgot Password?</a>
+        </div>
+    </div>
+
 </body>
 </html>
