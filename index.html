@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BN Analytics - Smarter Trading</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>BN Analytics - Trading Insights</title>
     <style>
+        /* Reset styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,21 +14,25 @@
         }
 
         body {
-            background: linear-gradient(45deg, #000428, #004e92);
+            background: black;
             color: white;
             text-align: center;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             overflow: hidden;
+        }
+
+        /* Full-Screen Canvas for Digital Network */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         /* Header */
         .header {
             width: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -36,25 +40,21 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10;
         }
 
-        .header .logo {
+        .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #FFCC00;
-        }
-
-        .nav {
-            display: flex;
-            gap: 25px;
+            color: #FFD700;
         }
 
         .nav a {
+            margin: 0 15px;
             color: white;
             text-decoration: none;
             font-size: 16px;
-            font-weight: bold;
             transition: 0.3s;
         }
 
@@ -62,204 +62,156 @@
             color: #FF5733;
         }
 
-        /* Background Animation with Words */
-        .bg-words {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* Hero Section */
+        .hero {
+            height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            pointer-events: none;
+            flex-direction: column;
+            padding: 0 10%;
+            z-index: 1;
+            position: relative;
         }
 
-        .bg-words span {
-            position: absolute;
-            font-size: 50px;
-            font-weight: bold;
-            opacity: 0;
-            color: rgba(255, 255, 255, 0.1);
-            text-transform: uppercase;
-            animation: fadeWords 12s infinite linear;
-        }
-
-        .bg-words span:nth-child(1) { animation-delay: 0s; }
-        .bg-words span:nth-child(2) { animation-delay: 2s; }
-        .bg-words span:nth-child(3) { animation-delay: 4s; }
-        .bg-words span:nth-child(4) { animation-delay: 6s; }
-        .bg-words span:nth-child(5) { animation-delay: 8s; }
-        .bg-words span:nth-child(6) { animation-delay: 10s; }
-
-        @keyframes fadeWords {
-            0% { opacity: 0; transform: scale(1); }
-            20% { opacity: 0.3; transform: scale(1.2); }
-            40% { opacity: 0.1; transform: scale(1.5); }
-            100% { opacity: 0; transform: scale(2); }
-        }
-
-        /* Main Content */
-        .container {
-            width: 80%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 120px;
-        }
-
-        .content {
-            max-width: 50%;
-            text-align: left;
-        }
-
-        h1 {
-            font-size: 38px;
+        .hero h1 {
+            font-size: 45px;
             font-weight: 600;
-            color: #FFCC00;
-            text-transform: uppercase;
+            color: #FFD700;
         }
 
-        p {
-            font-size: 18px;
-            color: #DDDDDD;
-            margin-top: 10px;
-        }
-
-        .highlight {
+        .hero p {
             font-size: 20px;
-            color: #FFFFFF;
-            font-weight: bold;
-        }
-
-        .join-btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #FF5733;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-            box-shadow: 0px 0px 10px rgba(255, 87, 51, 0.8);
-            transition: 0.3s;
-        }
-
-        .join-btn:hover {
-            background-color: #E64A19;
-            box-shadow: 0px 0px 15px rgba(255, 87, 51, 1);
-        }
-
-        /* Login Form */
-        .form-container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 12px;
-            color: white;
-            width: 350px;
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .form-container h2 {
-            color: #FFCC00;
-            margin-bottom: 10px;
-        }
-
-        .form-container input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            outline: none;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 16px;
-        }
-
-        .form-container input::placeholder {
-            color: #ddd;
-        }
-
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            background-color: #FF5733;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .form-container button:hover {
-            background-color: #E64A19;
-        }
-
-        .form-container a {
-            display: block;
-            text-decoration: none;
-            color: #FFCC00;
+            color: #DDD;
             margin-top: 10px;
-            font-size: 14px;
-            font-weight: bold;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #FF5733;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #E64A19;
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Word Animation -->
-    <div class="bg-words">
-        <span>Intraday</span>
-        <span>Momentum</span>
-        <span>Price Action</span>
-        <span>Trend Analysis</span>
-        <span>Scalping</span>
-        <span>Breakout</span>
-    </div>
+    <!-- Background Animation -->
+    <canvas id="networkCanvas"></canvas>
 
     <!-- Header -->
-    <div class="header">
+    <header class="header">
         <div class="logo">BN Analytics</div>
-        <div class="nav">
-            <a href="#">Knowledge</a>
+        <nav class="nav">
+            <a href="#">Home</a>
+            <a href="#">Features</a>
             <a href="#">Pricing</a>
-            <a href="#">T&C</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Refund Policy</a>
-            <a href="#">Contact Us</a>
-        </div>
-    </div>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="content">
-            <h1>Make Better Trading Decisions</h1>
-            <p class="highlight">Empowering Intraday Traders with Data-Driven Insights.</p>
-            <p>BN Analytics helps you analyze market trends and trading signals in real time, ensuring smarter investment choices.</p>
-            <a href="bn%20image%20v%201.html" class="join-btn">Join Now</a>
-        </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Smarter Trading Decisions</h1>
+        <p>BN Analytics provides AI-powered insights to help traders optimize their intraday strategies.</p>
+        <a href="#" class="cta-btn">Start Trading Smarter</a>
+    </section>
 
-        <!-- Login Form -->
-        <div class="form-container">
-            <h2>BN Analytics</h2>
-            <p>Sign In</p>
-            <form>
-                <input type="email" placeholder="Enter your email address" required>
-                <input type="password" placeholder="Enter your password" required>
-                <button type="submit">Sign In</button>
-            </form>
-            <a href="#">Create an account</a>
-            <a href="#">Forgot Password?</a>
-        </div>
-    </div>
+    <!-- JavaScript for Network Animation -->
+    <script>
+        const canvas = document.getElementById("networkCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas full screen
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const numParticles = 200;
+
+        // Particle Class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.size = Math.random() * 3 + 1;
+            }
+
+            move() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce from edges
+                if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
+                if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = "#00ffff"; // Cyan-colored dots
+                ctx.fill();
+            }
+        }
+
+        // Create particles
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        // Draw connections between close particles
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = "rgba(0, 255, 255, 0.2)"; // Light blue connections
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].move();
+                particles[i].draw();
+            }
+
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+
+        // Adjust canvas size on resize
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Start animation
+        animate();
+    </script>
 
 </body>
 </html>
